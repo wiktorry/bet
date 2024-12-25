@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -29,10 +30,13 @@ public class Event {
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
     private Date date;
-    @ElementCollection
-    @CollectionTable(name = "betsMapping",
-            joinColumns = {@JoinColumn(name = "eventId", referencedColumnName = "id")})
-    @MapKeyColumn(name = "betName")
-    @Column(name = "odds")
-    private Map<String, Double> bets;
+    @OneToMany(mappedBy = "event")
+    private List<Bet> bets;
+
+    public void addBet(Bet bet) {
+        if (this.bets == null) {
+            this.bets = new ArrayList<Bet>();
+        }
+        this.bets.add(bet);
+    }
 }

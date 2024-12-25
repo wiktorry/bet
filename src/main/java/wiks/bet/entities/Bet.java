@@ -7,18 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "teams")
+@Table(name = "bets")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Team {
+public class Bet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "sport")
-    private String sport;
+    @Column(name = "odds")
+    private float odds;
+    @Column(name = "active")
+    private boolean active;
+    @ManyToOne
+    @JoinColumn(name = "eventId")
+    private Event event;
 }
