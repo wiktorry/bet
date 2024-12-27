@@ -1,4 +1,6 @@
-package wiks.bet.entities;
+package wiks.bet.entities.event;
+
+import wiks.bet.entities.EventType;
 
 import java.util.Date;
 

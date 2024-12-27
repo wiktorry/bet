@@ -25,7 +25,6 @@ public class TeamService {
                 name,
                 sport
         );
-        System.out.println(team.toString());
         return teamRepository.save(team);
     }
 }

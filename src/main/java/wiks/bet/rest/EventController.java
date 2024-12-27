@@ -1,12 +1,12 @@
 package wiks.bet.rest;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import wiks.bet.entities.Event;
-import wiks.bet.entities.EventCreateRequest;
+import org.springframework.web.bind.annotation.*;
+import wiks.bet.entities.event.Event;
+import wiks.bet.entities.event.EventCreateRequest;
+import wiks.bet.entities.event.EventGetResponse;
 import wiks.bet.services.EventService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/betting/event")
@@ -20,5 +20,10 @@ public class EventController {
     @PostMapping
     public Event createEvent(@RequestBody EventCreateRequest event) {
         return eventService.addEvent(event);
+    }
+
+    @GetMapping
+    public List<EventGetResponse> getEvents() {
+        return eventService.getAllEvents();
     }
 }

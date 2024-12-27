@@ -1,10 +1,15 @@
 package wiks.bet.services;
 
 import org.springframework.stereotype.Service;
-import wiks.bet.entities.Event;
-import wiks.bet.entities.EventCreateRequest;
+import wiks.bet.entities.Bet;
 import wiks.bet.entities.Team;
+import wiks.bet.entities.event.Event;
+import wiks.bet.entities.event.EventCreateRequest;
+import wiks.bet.entities.event.EventGetResponse;
 import wiks.bet.repositories.EventRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class EventService {
@@ -28,5 +33,27 @@ public class EventService {
                 null
         );
         return eventRepository.save(event);
+    }
+
+    public List<EventGetResponse> getAllEvents() {
+        List<Event> events = eventRepository.findAll();
+        List<EventGetResponse> response = new ArrayList<>();
+        events.forEach(
+                event -> {
+                    List<Bet> bets = event.getBets();
+                    if (event.getBets().size() >= 3) {
+                        bets = event.getBets().subList(0, 3);
+                    }
+                    EventGetResponse eventResponse = new EventGetResponse(
+                            event.getHomeTeam().getName(),
+                            event.getAwayTeam().getName(),
+                            event.getDate(),
+                            event.getType(),
+                            bets
+                    );
+                    response.add(eventResponse);
+                }
+        );
+        return response;
     }
 }
