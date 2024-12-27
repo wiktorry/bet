@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import wiks.bet.entities.Event;
+import wiks.bet.entities.EventCreateRequest;
 import wiks.bet.services.EventService;
 
 @RestController
@@ -17,7 +18,7 @@ public class EventController {
     }
 
     @PostMapping
-    public Event createEvent(@RequestBody Event event) {
+    public Event createEvent(@RequestBody EventCreateRequest event) {
         return eventService.addEvent(event);
     }
 }

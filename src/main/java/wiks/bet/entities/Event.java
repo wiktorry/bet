@@ -21,15 +21,18 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "homeTeamId")
     private Team homeTeam;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "awayTeamId")
     private Team awayTeam;
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
     private Date date;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private EventType type;
     @OneToMany(mappedBy = "event")
     private List<Bet> bets;
 

@@ -19,6 +19,7 @@ public class Team {
     private int id;
     @Column(name = "name")
     private String name;
+    @Enumerated(EnumType.STRING)
     @Column(name = "sport")
-    private String sport;
+    private EventType sport;
 }

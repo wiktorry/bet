@@ -1,8 +1,11 @@
 package wiks.bet.services;
 
 import org.springframework.stereotype.Service;
+import wiks.bet.entities.EventType;
 import wiks.bet.entities.Team;
 import wiks.bet.repositories.TeamRepository;
+
+import java.util.Optional;
 
 @Service
 public class TeamService {
@@ -12,7 +15,17 @@ public class TeamService {
         this.teamRepository = teamRepository;
     }
 
-    public Team addTeam(Team team) {
+    public Team findOrAddTeam(String name, EventType sport) {
+        Optional<Team> teamOptional = teamRepository.findByNameAndSport(name, sport);
+        if (teamOptional.isPresent()) {
+            return teamOptional.get();
+        }
+        Team team = new Team(
+                0,
+                name,
+                sport
+        );
+        System.out.println(team.toString());
         return teamRepository.save(team);
     }
 }

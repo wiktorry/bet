@@ -2,9 +2,9 @@ package wiks.bet.services;
 
 import org.springframework.stereotype.Service;
 import wiks.bet.entities.Event;
+import wiks.bet.entities.EventCreateRequest;
+import wiks.bet.entities.Team;
 import wiks.bet.repositories.EventRepository;
-
-import java.util.List;
 
 @Service
 public class EventService {
@@ -16,8 +16,17 @@ public class EventService {
         this.teamService = teamService;
     }
 
-    public Event addEvent(Event event) {
-        List.of(event.getHomeTeam(), event.getAwayTeam()).forEach(teamService::addTeam);
+    public Event addEvent(EventCreateRequest eventRequest) {
+        Team homeTeam = teamService.findOrAddTeam(eventRequest.homeTeam(), eventRequest.type());
+        Team awayTeam = teamService.findOrAddTeam(eventRequest.awayTeam(), eventRequest.type());
+        Event event = new Event(
+                0,
+                homeTeam,
+                awayTeam,
+                eventRequest.date(),
+                eventRequest.type(),
+                null
+        );
         return eventRepository.save(event);
     }
 }
