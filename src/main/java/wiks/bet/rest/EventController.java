@@ -9,7 +9,7 @@ import wiks.bet.services.EventService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/betting/event")
+@RequestMapping("/betting/events")
 public class EventController {
     private final EventService eventService;
 

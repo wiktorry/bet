@@ -70,6 +70,7 @@ class EventIntegrationTest {
     @AfterEach
     void tearDown() {
         eventRepository.deleteAll();
+        teamRepository.deleteAll();
     }
 
     @Test
@@ -80,7 +81,7 @@ class EventIntegrationTest {
                 new Date(),
                 EventType.FOOTBALL
         );
-        MvcResult result = mockMvc.perform(post("/betting/event")
+        MvcResult result = mockMvc.perform(post("/betting/events")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(event)))
                 .andExpect(status().isOk())
@@ -92,4 +93,26 @@ class EventIntegrationTest {
         Assertions.assertEquals(teamRepository.count(), 2);
         Assertions.assertEquals(eventRepository.count(), 2);
     }
+
+    @Test
+    void shouldCreateEventWithTwoNewTeams() throws Exception {
+        EventCreateRequest event = new EventCreateRequest(
+                "Real Betis",
+                "Atletico Madrid",
+                new Date(),
+                EventType.FOOTBALL
+        );
+        MvcResult result = mockMvc.perform(post("/betting/events")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(event)))
+                .andExpect(status().isOk())
+                .andReturn();
+        String response = result.getResponse().getContentAsString();
+        Event eventFromJson = objectMapper.readValue(response, Event.class);
+        Team awayTeam = eventFromJson.getAwayTeam();
+        Assertions.assertEquals(awayTeam.getName(), "Atletico Madrid");
+        Assertions.assertEquals(teamRepository.count(), 4);
+        Assertions.assertEquals(eventRepository.count(), 2);
+    }
+
 }

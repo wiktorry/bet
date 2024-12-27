@@ -1,4 +1,4 @@
-package wiks.bet.entities;
+package wiks.bet.entities.bet;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

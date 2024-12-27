@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import wiks.bet.entities.Bet;
 import wiks.bet.entities.EventType;
 import wiks.bet.entities.Team;
+import wiks.bet.entities.bet.Bet;
 
 import java.util.ArrayList;
 import java.util.Date;
